@@ -1,6 +1,5 @@
 **Hospital Albretch**
 =====================
-
 Proyect elaborated to solve the patients' management issues.
 
 **Getting started**
