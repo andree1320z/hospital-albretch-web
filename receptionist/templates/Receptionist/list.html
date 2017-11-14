@@ -1,0 +1,60 @@
+{% extends "Receptionist/rec_base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+
+<div xmlns="http://www.w3.org/1999/html">
+
+  <div >
+    <h1 class="panel-title">Patient List</h1>
+  </div>
+
+
+  <table class="result">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Section</th>
+        <th>Room</th>
+        <th>Age</th>
+        <th>Gender</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in patients %}
+        <tr>
+          <td><a style="color:#34495e" href="{% url 'rec_app:patients-detail' patient.username %}">{{ patient.username }}</a></td>
+          <td>{{ patient.user.first_name }}</td>
+          <td>{{ patient.user.last_name }}</td>
+            <td>{{ patient.patient_section }}</td>
+            <td>{{ patient.patient_room }}</td>
+          <td>{{ patient.age }}</td>
+          <td>
+            {% if patient.gender == 'M' %}
+              <i class="fa fa-male"></i> M
+            {% else %}
+              <i class="fa fa-female"></i> F
+            {% endif %}
+          </td>
+
+
+
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+    <article>
+      <ul >
+       <div class="btn warning"><a href="{% url 'rec_app:patients-create' %}" > Insert </a></div>
+      </ul>
+    </article>
+
+</div>
+
+{% endblock %}

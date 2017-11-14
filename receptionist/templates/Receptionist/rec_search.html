@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>CHMS | SEARCH</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+</head>
+<body>
+<div class="header">
+	<ul>
+		<li class="brand"><img src="{% static 'logo.png' %}"></li>
+		<a href="{% url 'rec_app:patients-list' %}"><li>Patient List</li></a>
+        <a href="{% url 'doc_app:doc_register' %}"><li>Physician Register</li></a>
+		<a href="{% url 'patient_app:patient_register' %}"><li>Patient Register</li></a>
+        <a href="{% url 'messages_inbox' %}"><li>Messages</li></a>
+		<a href="{% url 'logout' %}"><li>LogOut</li></a>
+	</ul>
+</div>
+<div class="search">
+		<h1 style="color:#34495e">Search Patient</h1>
+		<p>Receptionist Search Panel</p>
+	<form method="get" action="">
+		<input class="large"  type="text" name="q" id="id_q" placeholder="search" />
+        <input class="btn  warning" type="submit" value="Submit" name="submit_search_button" />
+
+	</form>
+</div>
+<div class="result">
+	<table>
+<thead>
+      <tr>
+        <th>Username</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Section</th>
+        <th>Room</th>
+        <th>Age</th>
+        <th>Gender</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for patient in found_entries %}
+        <tr>
+          <td><a style="color:#34495e" href="{% url 'rec_app:patients-detail' patient.username %}">{{ patient.username }}</a></td>
+          <td>{{ patient.user.first_name }}</td>
+          <td>{{ patient.user.last_name }}</td>
+            <td>{{ patient.patient_section }}</td>
+            <td>{{ patient.patient_room }}</td>
+          <td>{{ patient.age }}</td>
+          <td>
+            {% if patient.gender == 'M' %}
+              <i class="fa fa-male"></i> M
+            {% else %}
+              <i class="fa fa-female"></i> F
+            {% endif %}
+          </td>
+
+
+
+        </tr>
+      {% endfor %}
+    </tbody>
+	</table>
+</div>
+<div class="pattern"></div>
+</body>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{ % static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script type="text/javascript">
+	$('input.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "-=30px"},300);
+	},function(){$(this).animate({"border-radius": "+=30px"},300);});
+</script>
+</html>

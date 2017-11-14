@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+	<title>Patient|Home</title>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
+</head>
+<body>
+<div class="sidebar">
+	<ul>
+		<a class="btn warning" href="#profile"><li class="btn">Profile</li></a>
+		<a class="btn warning" href="#history"><li class="btn warning">History</li></a>
+		<a class="btn warning" href="#schedule"><li class="btn warning ">Schedule</li></a>
+{#		<a class="btn warning" href="{% url 'django_messages:messages_inbox' %}"><li class="btn warning">Messages</li></a>#}
+		<a class="btn warning" href="{% url 'patientsearch' %}"><li class="btn warning ">Search</li></a>
+        <a class="btn warning" href="{% url 'logout' %}"><li class="btn warning ">Log Out</li></a>
+	</ul>
+</div>
+<div class="main">
+	<div class="module" id="profile">
+        {% if patient.photo %}
+		<p><img src={{patient.photo.url}}></p>
+        {% else %}
+        <img src="{% static 'congruent_pentagon.png' %}">
+        {% endif %}
+		<p>Username : {{ patient.user.username}} </p>
+		<p>FirstName : {{ patient.user.first_name}} </p>
+		<p>LastName : {{ patient.user.last_name}} </p>
+		<p>Email: {{ patient.user.email}}</p>
+		<p>social security number :{{ patient.ssn}} </p>
+		<p>Birthday : {{ patient.birthday }}</p>
+		<p>Age : {{ patient.age }}</p>
+		<p>Occuption : {{ patient.occupation}} </p>
+		<p>Address : {{ patient.get_address_as_string }}</p>
+
+	</div>
+	<div class="module" id="history"></div>
+    <div><article>
+    <p>&nbsp</p>
+    </article></div>
+	<div class="schedule" id="schedule">
+
+    {% if sch.event %}
+    <p> Event : {{ sch.event }} </p>
+    <p> Date : {{ sch.event_date }} </p>
+    <p> Time : {{ sch.event_time }} </p>
+    <p> Related_Divison : {{ sch.related_division }} </p>
+    <p> description : {{ sch.description }} </p>
+    {% else %}
+        <p>You have no upcoming event!</p>
+    {% endif %}
+     <p>&nbsp</p>
+        <p>&nbsp</p>
+        <p>&nbsp</p>
+        <p>&nbsp</p>
+	</div>
+	<div class="module" id="messages"></div>
+	<div class="module" id="search"></div>
+</div>
+<div class="pattern"></div>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/hoverIntent.js"></script>
+<script src="js/script.js"></script>
+<script type="text/javascript">
+	$('li.btn').hoverIntent(function(){
+		round($(this));
+	},function(){});
+</script>
+</html>

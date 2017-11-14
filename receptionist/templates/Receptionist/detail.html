@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+
+<head>
+	<title>CHMS | Patient Detail</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+</head>
+
+<body>
+
+
+
+  <div class="header">
+      <ul class="header ul li">
+
+        <li class="brand"><img src="{% static 'logo.png' %}"></li>
+        <a href="{% url 'rec_app:patients-list' %}"><li>Patient List</li></a>
+        <a href="{% url 'rec_app:rec_search' %}"><li>Search</li></a>
+        <a href="{% url 'rec_app:patients-create' %}"><li>BedRidden Registeration</li></a>
+        <a href="{% url 'messages_inbox' %}"><li>Messages</li></a>
+        <a href="{% url 'history_records:system_home' patient.user.username %}"><li>Patient History</li></a>
+        {% if not ward %}
+         <a href="{% url 'rec_app:allocate-ward' patient.username %}"> <li>Allocate Guardian </li></a>
+         {% else %}
+         <a href="{% url 'rec_app:update-ward' patient.username %}" > <li>Update Guardian</li> </a>
+        {% endif %}
+     {% if not sch %}
+      <a href="{% url 'rec_app:set-schedule' patient.username %}" > <li>Set Schedule</li> </a>
+      {% else %}
+      <a href="{% url 'rec_app:update-schedule' patient.username %}" ><li> Update Schedule</li> </a>
+      {% endif %}
+          <a href="{% url 'logout' %}"><li>LogOut</li></a>
+      </ul>
+  </div>
+
+
+
+<div class="container">
+ {% block content %}
+
+<div >
+
+  <div >
+    <h1>
+      Patient Specifications
+    </h1>
+      <p>This is {{ patient.firstname }} {{ patient.lastname}} details</p>
+       <ul>
+      <li><div class="btn success"><a href="{% url 'rec_app:patients-list' %}"  >  Back To List  </a></div></li>
+      <li>    </li>
+      <li><div class="btn success"><a href="{% url 'rec_app:patients-update' patient.username %}"  >Modify This</a></div></li>
+       <li>    </li>
+      <li><div class="btn warning"><a href="{% url 'rec_app:patients-delete' patient.username %}" > Delete This </a></div></li>
+    </ul>
+  </div>
+
+  <div class="sheet">
+
+
+        <table>
+		<tr class="blue">
+			<td  >Username </td>
+			<td> {% if patient.username %} {{ patient.username }} {% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Firstname </td>
+			<td> {% if patient.user.first_name %} {{ patient.user.first_name|title }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Lastname </td>
+			<td> {% if patient.user.last_name %}{{ patient.user.last_name|title }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Section </td>
+			<td> {% if patient.patient_section %} {{ patient.patient_section }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Room </td>
+			<td> {% if patient.patient_room %}{{ patient.patient_room}}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>SSN </td>
+			<td> {% if patient.ssn %}{{ patient.ssn }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Age </td>
+			<td> {% if patient.age %} {{ patient.age }}<{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Birthday </td>
+			<td> {% if patient.birthday %}{{ patient.birthday}}<{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Gender </td>
+			<td> {% if patient.gender %} {{ patient.gender }}{% endif %} </td>
+		</tr>
+
+
+		<tr class="blue">
+			<td>Address </td>
+			<td>  {% if patient.get_address_as_string %} {{ patient.get_address_as_string }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Email </td>
+			<td> {% if patient.email %} {{ patient.email }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>Tel </td>
+			<td> {% if patient.Tel %}{{ patient.Tel }}{% endif %} </td>
+		</tr>
+		<tr class="blue">
+			<td>marital_status </td>
+			<td> {% if patient.marital_status %}{{ patient.marital_status }}{% endif %} </td>
+		</tr>
+
+		<tr class="blue">
+			<td>occupation </td>
+			<td> {% if patient.occupation %}{{ patient.occupation }}{% endif %} </td>
+		</tr>
+
+
+		<tr class="red">
+			<td>Guardian Name </td>
+			<td> {% if ward %} {{ ward.guardian_name }}{% endif %} </td>
+		</tr>
+
+		<tr class="red">
+			<td>Guardian Relation </td>
+			<td> {% if ward %}{{ ward.relation_to_guardian }}{% endif %} </td>
+		</tr>
+		<tr class="red">
+			<td>Guardian Phone </td>
+			<td> {% if ward %}{{ ward.guardian_phone }}{% endif %} </td>
+		</tr>
+
+
+		<tr class="green">
+			<td>Event </td>
+			<td> {% if sch %} {{ sch.event }}{% endif %} </td>
+		</tr>
+		<tr class="green">
+			<td>Event Date </td>
+			<td> {% if sch %} {{ sch.event_date }}{% endif %} </td>
+		</tr>
+		<tr class="green">
+			<td>Event Time </td>
+			<td> {% if sch %} {{ sch.event_time }}{% endif %} </td>
+		</tr>
+		<tr class="green">
+			<td>Related_division </td>
+			<td> {% if sch %} {{ sch.related_division }}{% endif %} </td>
+		</tr>
+		<tr class="green">
+			<td>Description </td>
+			<td>{% if sch %} {{ sch.description }} {% endif %} </td>
+		</tr>
+
+            <div class="forground"></div>
+	</table>
+    <article>
+        <p> &nbsp</p>
+        <p> &nbsp</p>
+        <p> &nbsp</p><p> &nbsp</p>
+
+
+    </article>
+
+
+  </div>
+
+</div>
+</div>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{ % static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script type="text/javascript">
+	$('input.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "-=30px"},300);
+	},function(){$(this).animate({"border-radius": "+=30px"},300);});
+</script>
+{% endblock content %}
+</body>
+
+</html>
+
+     

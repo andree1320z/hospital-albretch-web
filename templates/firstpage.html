@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
+<html>
+<head>
+	<title>Hospital Albretch | Bienvenido</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/firstPage.css' %}">
+</head>
+<body>
+		<div class="welcome">	
+				<div class="logo">	<img src="{% static 'logo.png' %}"></div>
+				<h4>Sistema de gestión integral de pacientes - Hospital I Albretch</h4>
+		</div>
+		<div class="buttons">
+		<a href="{% url 'systemhomepage' %}" ><div class="btn success large">Página de Inicio</div></a>
+		<a href="{% url 'patientsearch' %}" ><div class="btn warning large">Buscar Paciente</div></a>
+			</div>
+			<div class="pattern"></div>
+</body>
+
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script>
+	var heartRightMargin = window.innerWidth ;
+	console.log(heartRightMargin);
+	$('div.logo img').css('left',heartRightMargin/2 - 75);
+	heartBeat();
+
+	
+	$('div.btn').hoverIntent(function(){
+		dingDong($(this));
+		// $(this).animate({"border-radius": "30px"},200);
+	},function(){
+		$(this).animate({"border-radius": "0px"},200);
+	});
+
+</script>
+</html>

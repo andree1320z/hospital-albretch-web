@@ -1,0 +1,39 @@
+{% extends "Receptionist/Create_delete_update_Patient_base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+<article>
+<p> &nbsp</p>
+ <p> &nbsp</p>
+    </article>
+<div class="panel panel-primary">
+
+  <div class="panel-heading">
+    <h1 class="panel-title">
+      Delete Patient <strong>{{ patient.firstname|title }} {{ patient.lastname|title }}</strong> <i class="fa fa-trash"></i>
+    </h1>
+  </div>
+
+  <article class="panel-body">
+    <form action="" method="post">
+      {% csrf_token %}
+      <p>Are you sure to remove <strong>{{ patient.firstname|title }} {{ patient.lastname|title }}</strong> with Username: <strong>{{ patient.username }}</strong>?</p>
+        <article>
+        <p> &nbsp</p>
+    </article>
+        <p>
+        <button type="submit"  class="btn btn-success btn-block"/>Confirm</button>
+      </p>
+    </form>
+
+    <section>
+      <p>
+        <a href="{% url 'rec_app:patients-list' %}" class="btn btn-primary btn-block"> Back To list </a>
+      </p>
+    </section>
+
+  </article>
+
+</div>
+
+{% endblock content %}
