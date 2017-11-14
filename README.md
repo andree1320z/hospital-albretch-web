@@ -15,3 +15,8 @@ Proyect elaborated to solve the patients' management issues.
 5. ./manage migrate
 
 6. ./manage runserver
+
+**Screenshots**
+===============
+
+https://user-images.githubusercontent.com/20935927/32780668-23475230-c910-11e7-95be-13fe3d76c68e.png
