@@ -25,7 +25,7 @@ def register(request):
     #         return HttpResponse("server_message: Access Denied")
     # except:
     #     return HttpResponse("server_message: Access Denied")
-    c = {}
+    # c = {}
     if request.method == "POST":
         try:
             birth = request.POST['birthday']
@@ -73,9 +73,9 @@ def register(request):
             return HttpResponse("An Error Has Occured During Registration, Since Required Fields Are Not    \
                                 Entered Properly , Please Try Again")
 
-        c.update(csrf(request))
+        # c.update(csrf(request))
         return HttpResponseRedirect(reverse('rec_app:rec_search'))
-    return render_to_response('physician/register.html', c, RequestContext(request, {}))
+    return render(request, 'physician/register.html', {})
 
 
 def home(request):
