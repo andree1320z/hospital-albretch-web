@@ -70,7 +70,8 @@ def register(request):
             #                   Entered Properly , Please Try Again")
             return render(request, 'physician/register.html', {'flag': False})
 
-        return HttpResponseRedirect(reverse('rec_app:patient-list'))
+        # return HttpResponseRedirect(reverse('rec_app:patient-list'))
+        return HttpResponseRedirect(reverse('login_all'))
     return render(request, 'register.html', {'flag': True})
 
 
