@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'hospital/', include('hospital.urls')),
     url(r'^patient/', include('patient.urls', namespace='patient_app')),
     url(r'^rec/', include('receptionist.urls', namespace='rec_app')),
+    url(r'history/', include('history_records.urls', namespace='history_records')),
     # url(r'^$', hello.views.index, name='index'),
     url(r'^db', hello.views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),

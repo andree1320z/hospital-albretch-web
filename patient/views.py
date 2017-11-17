@@ -1,4 +1,5 @@
 import datetime
+import logging
 from urllib.parse import urlencode
 
 from django.shortcuts import render
@@ -19,15 +20,14 @@ from receptionist.models import Receptionist
 
 
 def register(request):
-    try:
-        if not (request.user.is_authenticated() and request.user.profile.user_type == 0):
-            return HttpResponse("server_message: Access Denied")
-    except:
-        return HttpResponse("server_message: Access Denied")
-    c = {}
+    # try:
+    #     if not (request.user.is_authenticated() and request.user.profile.user_type == 0):
+    #         return HttpResponse("server_message: Access Denied")
+    # except:
+    #     return HttpResponse("server_message: Access Denied")
     if request.method == "POST":
         try:
-            birth = request.POST['birthday']
+            # birth = request.POST['birthday']
             fname = request.POST['first_name']
             lname = request.POST['last_name']
             user = User.objects.create_user(username=request.POST['username'],
@@ -37,16 +37,16 @@ def register(request):
                                             email=request.POST['email']
                                             )
             user.save()
-            rec = Receptionist.objects.get(user=request.user)
+            # rec = Receptionist.objects.get(user=request.user)
             patient = Patient(
-                parent_hospital=rec.hospital,
+                # parent_hospital=rec.hospital,
                 user_type=2,
                 user=user,
                 firstname=fname,
                 lastname=lname,
                 Tel=request.POST['tel'],
                 ssn=request.POST['ssn'],
-                birthday=birth,
+                # birthday=birth,
                 age=request.POST['age'],
                 marital_status=request.POST['marital_status'],
                 occupation=request.POST['occupation'],
@@ -59,18 +59,19 @@ def register(request):
                 postal_code=request.POST['postal_code']
             )
             patient.save()
-        except:
+        except Exception as e:
+            logging.exception("message")
             try:
                 if user: user.delete()
                 if patient: patient.delete()
             except:
                 pass
-            return HttpResponse("An Error Has Occured During Registration, Since Required Fields Are Not  \
-                              Entered Properly , Please Try Again")
+            # return HttpResponse("An Error Has Occured During Registration, Since Required Fields Are Not  \
+            #                   Entered Properly , Please Try Again")
+            return render(request, 'physician/register.html', {'flag': False})
 
-        c.update(csrf(request))
         return HttpResponseRedirect(reverse('rec_app:patient-list'))
-    return render_to_response('patient/register.html', c, context_instance=RequestContext(request))
+    return render(request, 'register.html', {'flag': True})
 
 
 def home(request):

@@ -1,0 +1,121 @@
+{% load staticfiles %}
+<html>
+<head>
+	<title>CHMS | Medical File</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/medical.css' %}">
+	
+</head>
+<body>
+	<div class="header">
+	<ul>
+		<li class="brand"><img src="{% static 'logo.png' %}"></li>
+		<a href="{% url 'SystemHomePage' %}"><li>SystemHomePage</li></a>
+		<a href="{% url 'phar_app:login' %}"><li>Pharmacy</li></a>
+		<a href="{% url 'messages_inbox' %}"><li>Messages</li></a>
+		<a href="{% url 'PatientSearch' %}" ><li>Search Patient</li></a>
+		<a href="#"><li>Contact</li></a>
+        <a href="{% url 'logout' %}"><li>Logout</li></a>
+		
+	</ul>
+</div>
+
+	<h3>Unit Summary Sheet</h3>
+	<h4>File No :</h4>
+	<div class="sheet">
+		
+		<table>
+            <tr class="green">
+				<td>First Name : </td>
+				<td> {{ patient.user.first_name }} </td>
+			</tr>
+			<tr class="green">
+				<td>Last Name : </td>
+				<td> {{ patient.user.last_name }} </td>
+			</tr>
+			<tr class="green">
+					<td>Father Name : </td>
+					<td> {{ patient.father_name }} </td>
+			</tr>
+			
+				<tr class="green"><td>Sex:</td><td> {{ patient.get_gender_display }}</td></tr>
+				<tr class="green"><td>Date of Birth:</td><td> {{ patient.birthday }}</td></tr>
+				<tr class="green"><td>Occupation:</td><td> {{ patient.occupation }}</td></tr>
+			
+			
+				<tr class="green"><td>Attending Physician:</td><td>{{ sheet.attending_physician.user.first_name}}{{sheet.attending_physician.user.last_name }}</td> </tr>
+				<tr class="green"><td>Date of Addmition: </td><td>{{sheet.medical_file.date_of_addmition}}</td></tr>
+				<tr class="green"><td>Date of Discharge:</td><td>{{sheet.medical_file.date_of_discharge}}</td></tr>
+			
+		
+		
+		<tr class="green"><td>Ward: </td><td>{{ sheet.medical_file.ward }}</td></tr>
+		<tr class="green"><td>Room:</td><td> {{ sheet.medical_file.room }}</td></tr>
+		<tr class="green"><td>Bed: </td><td>{{ sheet.medical_file.bed }}</td></tr>
+		<tr class="green"><td>Address:</td><td>{{ patient.get_address_as_string }}</td></tr>
+		<tr class="green"><td>Phone No.: </td><td>{{ patient.Tel }}</td></tr>
+		
+						<form method='post'>
+				{% csrf_token %}
+			<tr class="blue"><td>Chief Complaint of the Patient & Primary Diagnosis:</td><td><input name='ccapd' class='inp' type='text' value="{{ sheet.chief_complaint_and_primary_diagnosis }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Final Diagnosis: </td><td><input class='inp' name="fd" type='text' value="{{ sheet.final_diagnosis }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Medical & Surgical Procedures:</td><td><input name="masp" class='inp' type='text' value="{{ sheet.medical_and_surgical_procedures }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Results of Paraclinical Examination:</td><td><input name="rope" class='inp' type='text' value="{{ sheet.results_of_paraclinical_examinations }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Disease Progress (Cause of Death):</td><td><input name="dp" class='inp' type='text' value="{{ sheet.disease_progress }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Patient's Condition on Discharge:</td><td><input name="pd" class='inp' type='text' value="{{ sheet.patient_condition_on_discharge }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Recommendations after Discharge:</td><td><input name="ra" class='inp' type='text' value="{{ sheet.recommendations_after_discharge }}" disabled='true'></td> </tr>
+			<tr class="blue"><td>Physician: </td><td>{{ sheet.attending_physician.user.first_name}} {{sheet.attending_physician.user.last_name }}</td></tr>
+				</table>
+			</div>{% ifequal type 6 %}
+
+			          <input class="btn" type="submit" disabled id='submit' value="submit" disabled>
+			    {% endifequal %}
+			</form>
+			{% ifequal type 6 %}
+<div class="button-holder">
+<button id="edit" class="btn warning"onclick="Edit()">Edit</button>
+</div>
+{% endifequal %}
+		</div>
+
+	</div>
+		<script type="text/javascript">
+		function Edit(){
+			var list=	document.getElementsByClassName("inp");
+			// console.log('salam');
+			
+			for (i=0;i<list.length;i++){
+				list[i].disabled=false;
+				// element.disabled=false;
+			}
+			var list=	document.getElementsByClassName("txtarea");
+			// console.log('salam');
+			
+			for (i=0;i<list.length;i++){
+				list[i].disabled=false;
+				// element.disabled=false;
+			}
+			document.getElementById('submit').disabled=false;
+		}
+	</script>
+<div class="pattern"></div>
+	<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+<script type="text/javascript">
+	$('button.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "+=30px"},300);
+	},function(){$(this).animate({"border-radius": "-=30px"},300);});
+	$('input.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "+=30px"},300);
+	},function(){$(this).animate({"border-radius": "-=30px"},300);});
+	$('#edit').click(function(){
+		// $('input[disabled]').removeAttr('disabled');
+		$('input.btn').addClass('success');
+		// $('textarea[disabled]').removeAttr('disabled');
+	});
+</script>
+
+</body>
+</html>

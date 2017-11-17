@@ -1,40 +1,47 @@
 <!DOCTYPE html>
+{% load static %}
 {% load staticfiles %}
 <html>
 <head>
 	<meta charset="utf-8">
 	<title>Register</title>
-	<link rel="stylesheet" type="text/css" href='{%static "style.css" %}'>
+	<link rel="stylesheet" type="text/css" href='{% static "style.css" %}'>
 </head>
 <body>
-	<form method="post" action="/patient/register">
+	<form method="post" style="text-align: center !important;">
 	{% csrf_token %}
-		<legend>Patient Registration Form</legend>
+		<legend>Formulario de registro de pacientes</legend>
 		<hr>
-		<p><input name="username" placeholder="Username">  </p>
-		<p><input name="first_name" placeholder="Firstname">  </p>
-		<p><input name="last_name" placeholder="Lastname">  </p>
+		<p><input name="username" placeholder="Username" type="text" required maxlength="150">  </p>
+		<p><input name="first_name" placeholder="Nombre" type="text" required maxlength="30">  </p>
+		<p><input name="last_name" placeholder="Apellidos" type="text" required maxlength="30">  </p>
 		<p><input name="email" type="email" placeholder="Email">  </p>
-		<p><input name="tel" type="tel" placeholder="Tel">  </p>
-		<p><input name="ssn" placeholder="ssn"></p>
-		<p><input name="birthday" type="date" placeholder="Birthday"></p>
-		<p><input name="age" placeholder="Age"></p>
+		<p><input name="tel" type="text" placeholder="Teléfono" required maxlength="25">  </p>
+		<p><input name="ssn" type="number" placeholder="DNI" required min="11111111" max="99999999" aria-valuemax="99"></p>
+{#		<p><input name="birthday" type="date" placeholder="Cumpleaños"></p>#}
+		<p><input name="age" placeholder="Edad" required maxlength="2"></p>
 		<p> 
-			<select name="marital_status">
-				<option value="0">single</option>
-				<option value="1">married</option>
+			<select name="marital_status" required>
+                <option value="None">Estado Civil</option>
+				<option value="0">soltero</option>
+				<option value="1">casado</option>
 			</select>
 		</p>
-		<p><input name="occupation" placeholder="Occupation">  </p>
-		<p><input name="country" placeholder="Country">  </p>
-		<p><input name="city" placeholder="City">  </p>
-		<p><input name="district" placeholder="District">  </p>
-		<p><input name="street" placeholder="Street">  </p>
-		<p><input name="alley" placeholder="Alley">  </p>
-		<p><input name="building_no" placeholder="Building-no">  </p>
-		<p><input name="postal_code" placeholder="Postal Code">  </p>
+		<p><input name="occupation" placeholder="Ocupación" required maxlength="100">  </p>
+		<p><input name="country" placeholder="País" required maxlength="200">  </p>
+		<p><input name="city" placeholder="Ciudad" required maxlength="25">  </p>
+		<p><input name="district" placeholder="Distrito" required maxlength="25">  </p>
+		<p><input name="street" placeholder="Provincia" required maxlength="30">  </p>
+		<p><input name="alley" placeholder="Calle" required maxlength="30">  </p>
+		<p><input name="building_no" placeholder="Número" required maxlength="200">  </p>
+		<p><input name="postal_code" placeholder="Código Postal" required maxlength="30">  </p>
 		<br>
-		<input type="submit">
+{#		<input type="submit">#}
+        <button class="btn btn-primary" type="submit">Enviar</button>
+        <br>
+        {% if flag == False %}
+            <p class="alert-danger">Existen campos inválidos, revise por favor</p>
+        {% endif %}
 	</form>
 </body>
 </html>

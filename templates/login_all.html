@@ -21,12 +21,19 @@
 	<div>
 		<form name="login-form" action="/login_all/" method="POST">
 			{% csrf_token %}
-			<legend class="text-center">Login</legend>
+			<legend class="text-center" style="text-align: center !important;">Login</legend>
 			<p class="fade">Ingrese sus credenciales</p>
 			<p><input   name="username" type="text" id="username"  placeholder="Username"></p>
 			<p><input   name="password" type="password" id="password"  placeholder="Password"></p>
 			<p><input type="submit" name="submit" class="btn warning " value="Aceptar"></p>
-			<p class="error">{{ error}}</p>
+            <p class="error">{{ error}}</p>
+            <p class="fade">Crear nueva cuenta como:</p>
+            <a class="" href="{% url 'doc_app:doc_register' %}">Médico</a>
+            <br>
+            <strong>ó</strong>
+            <br>
+            <a class="" href="{% url 'patient_app:patient_register' %}">Paciente</a>
+
 		</form>
 	</div>
 	<div class="pattern"></div>

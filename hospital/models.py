@@ -47,8 +47,8 @@ class BaseUser(models.Model):  # Person
 
     # More basic Info
     Tel = models.CharField(max_length=25, null=True, blank=True)
-    ssn = models.CharField(max_length=9, unique=True, null=True)
-    birthday = models.DateField(null=True, blank=True)
+    ssn = models.CharField(max_length=8, unique=True, null=True)
+    # birthday = models.DateField(null=True, blank=True)
     age = models.CharField(max_length=10, blank=True, null=True)
 
     # Extra Info
@@ -69,7 +69,7 @@ class BaseUser(models.Model):  # Person
                                         )
 
     # Home address
-    country = models.CharField(max_length=200, default='Iran')
+    country = models.CharField(max_length=200, default='Perú')
     city = models.CharField(max_length=25, null=True, blank=True)
     district = models.CharField(max_length=25, null=True, blank=True)
     street = models.CharField(max_length=30, null=True, blank=True)
@@ -394,16 +394,16 @@ class Staff(BaseUser):
     def __init__(self, *args, **kwargs):
         super(Staff, self).__init__(*args, **kwargs)
         self.__model_label__ = 'staff'
-        self._parent_model = 'Hospital'
+        # self._parent_model = 'Hospital'
         if self.user_type == 2:
-            raise TypeError("Not Allowed : Staff Must not be a Patient ")
+            raise TypeError("Not Allowed : Staff no debe ser paciente. ")
 
     staff_role = models.CharField("Staff Role", max_length=100,
-                                  help_text=" This is the Role of the Staff in the Hospital",
+                                  help_text=" Este es el rol como parte del hospital",
                                   choices=Hospital_STAFF_ROLE, null=True, blank=True)
     photo = models.ImageField(null=True, blank=True, upload_to='images/')
-    is_staff_head = models.BooleanField("Is Staff Head of the Department", default=False, blank=True)
-    hospital = models.ForeignKey(Hospital, null=True, blank=True)
+    is_staff_head = models.BooleanField("Es jefe de departamento en el hospital", default=False, blank=True)
+    hospital = models.ForeignKey(Hospital, null=True, blank=True, related_name="hospital")
 
     def __unicode__(self):
         return "%s" % self.user.username

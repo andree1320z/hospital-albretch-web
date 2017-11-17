@@ -26,6 +26,7 @@
         <option value="$MODULE_DIR$/receptionist/templates" />
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/physician/templates" />
+        <option value="$MODULE_DIR$/history_records/templates" />
       </list>
     </option>
   </component>

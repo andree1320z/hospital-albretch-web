@@ -77,11 +77,11 @@ def login(request):
                     c['error'] = 'No Part'
                     return render_to_response('login_all.html', c)
             except:
-                c['error'] = 'wrong credentials try again'
+                c['error'] = 'Credenciales incorrectas, intente de nuevo'
                 return render_to_response('login_all.html', c)
 
         else:
-            c['error'] = 'wrong credentials try again'
+            c['error'] = 'Credenciales incorrectas, intente de nuevo'
             return render_to_response('login_all.html', c)
 
     c.update(csrf(request))

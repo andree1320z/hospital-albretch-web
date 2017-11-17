@@ -14,6 +14,7 @@ whitenoise = "*"
 pillow = "*"
 djangorestframework = "*"
 django-staticfiles = "*"
+django-extensions = "*"
 
 
 [requires]

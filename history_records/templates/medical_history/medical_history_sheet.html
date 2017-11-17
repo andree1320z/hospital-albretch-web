@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+{% load static %}
+{% load staticfiles %}
+<html>
+<head>
+	<title>Medical History Sheet</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/medical.css' %}">
+</head>
+<body>
+<div class="header">
+	<ul>
+		<li class="brand"><img src="{% static 'logo.png' %}"></li>
+		<a href="{% url 'systemhomepage' %}"><li>Home</li></a>
+{#		<a href="{% url 'phar_app:login' %}"><li>Pharmacy</li></a>#}
+{#		<a href="{% url 'messages_inbox' %}"><li>Messages</li></a>#}
+{#		<a href="{% url 'PatientSearch' %}" ><li>Search Patient</li></a>#}
+        <a href="{% url 'logout' %}"><li>Logout</li></a>
+	</ul>
+</div>
+<form method="post">
+	{%csrf_token%}
+<h3>Medical History Sheet</h3>
+<h4>File No : </h4>
+{% ifequal type 6 %}
+<ul>
+	<li><div id="edit" class="btn warning" style="display:inline-block">Edit</div></li>
+	<li><input id="submit" type="submit" class="btn success" style="dislay:inline-block" disabled></li>
+</ul>
+{% endifequal %}
+
+
+<div class="sheet">
+
+	<table>
+		<tr class="green">
+			<td>Nombre : </td>
+			<td> {{ patient.user.first_name }} </td>
+		</tr>
+
+		<tr class="green">
+			<td>Apellidos : </td>
+			<td> {{ patient.user.last_name }} </td>
+		</tr>
+
+
+		<tr class="green">
+			<td>Nombre del Padre : </td>
+			<td> {{ patient.father_name }} </td>
+		</tr>
+
+		<tr class="green">
+			<td>Médico a cargo : </td>
+			<td> {{ sheet.attending_physician.user.first_name}} {{sheet.attending_physician.user.last_name }} </td>
+		</tr>
+
+		<tr class="green">
+			<td>Fecha de Admisión : </td>
+			<td>{{sheet.medical_file.date_of_addmition}}</td>
+		</tr>
+		<tr class="blue">
+			<td>Curador : </td>
+			<td> {{ sheet.medical_file.ward }}</td>
+		</tr>
+		<tr class="blue">
+			<td>Sala : </td>
+			<td>{{ sheet.medical_file.room }}</td>
+		</tr>
+		<tr class="blue">
+			<td>Cama : </td>
+			<td> {{ sheet.medical_file.bed }}</td>
+		</tr>
+
+		<tr class="blue">
+			<td>Jefe de sala : </td>
+			<td> <input name="cf" type='text' value="{{ sheet.chief_complain }}" disabled='true'></td>
+		</tr>
+
+		<tr class="blue">
+			<td>Historia de Enfermedades presentes : </td>
+			<td> <input name="hopi" class='inp' type='text' value="{{ sheet.history_of_present_illness }}" disabled='true'> </td>
+		</tr>
+
+		<tr class="blue">
+			<td> Historial de enfermedades:</td>
+			<td><input name="pdh" class='inp' type='text' value="{{ sheet.pass_diseases_history }}" disabled='true'> </td>
+		</tr>
+
+
+		<tr class="blue">
+			<td>Tratamiento con narcóticos o historia de uso de sustancias alucinógenas:</td>
+			<td><input name="crtoa" class='inp' type='text' value="{{ sheet.current_drug_theraphy_and_other_addiction }}" disabled='true'> </td>
+		</tr>
+
+		<tr class="blue">
+			<td>Alergias:</td>
+			<td><input name="at" class='inp' type='text' value="{{ sheet.allergy_to }}" disabled='true'></td>
+		</tr>
+
+
+		<tr class="blue">
+			<td>Historia Familiar:</td>
+			<td><input name="fh" class='inp' type='text' value="{{ sheet.family_history }}" disabled='true'></td>
+		</tr>
+
+		<tr class="blue">
+			<td> Resumen:</td>
+			<td><textarea name="summary" class='txtarea' disabled>{{ sheet.summary }} </textarea> </td>
+		</tr>
+
+		<tr class="blue">
+			<td>Diagnóstico Primario:</td>
+			<td><textarea name="pdx" class='txtarea' disabled>{{ sheet.primary_dx }}</textarea></td>
+		</tr>
+		
+		<tr class="red">
+			<td>Médico:</td>
+			<td>{{ sheet.attending_physician.user.first_name}} {{sheet.attending_physician.user.last_name }}</td>
+		</tr>
+
+
+		<!--- example of table rows
+		<tr class="green">
+			<td>Text area : </td>
+			<td><textarea name="textarea" disabled="">Disabled</textarea> </td>
+		</tr>
+		<tr class="green">
+			<td>Text area : </td>
+			<td><textarea name="hello">Enable</textarea> </td>
+		</tr>
+		<tr class="blue">
+			<td>Input Example : </td>
+			<td> <input type="text" name="name" disabled value="Disabled"></td>
+		</tr>
+		<tr class="red">
+			<td>Input Example : </td>
+			<td> <input type="text" name="enable" value="Enable"></td>
+		</tr> !-->
+	</table>
+</div>
+</form>
+<div class="pattern"></div>
+</body>
+<script src="{% static 'js/jquery.js' %}"></script>
+<script src="{% static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
+
+<script type="text/javascript">
+	$('div.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "+=30px"},300);
+	},function(){$(this).animate({"border-radius": "-=30px"},300);});
+	$('input.btn').hoverIntent(function(){
+		$(this).animate({"border-radius": "+=30px"},300);
+	},function(){$(this).animate({"border-radius": "-=30px"},300);});
+	$('#edit').click(function(){
+		$('input[disabled]').removeAttr('disabled');
+		$('textarea[disabled]').removeAttr('disabled');
+	});
+</script>
+</html>

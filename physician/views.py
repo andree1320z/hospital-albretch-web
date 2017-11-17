@@ -1,3 +1,4 @@
+import logging
 from urllib.parse import urlencode
 
 from django.contrib.auth.models import User
@@ -28,7 +29,7 @@ def register(request):
     # c = {}
     if request.method == "POST":
         try:
-            birth = request.POST['birthday']
+            # birth = request.POST['birthday']
             fname = request.POST['first_name']
             lname = request.POST['last_name']
             user = User.objects.create_user(username=request.POST['username'],
@@ -38,14 +39,14 @@ def register(request):
                                             email=request.POST['email']
                                             )
             user.save()
-            rec = Receptionist.objects.get(user=request.user)
+            # rec = Receptionist.objects.get(user=request.user)
             physician = Physician(
-                hospital=rec.hospital,
+                # hospital=1,
                 user_type=6,
                 user=user,
                 Tel=request.POST['tel'],
                 ssn=request.POST['ssn'],
-                birthday=birth,
+                # birthday=birth,
                 age=request.POST['age'],
                 marital_status=request.POST['marital_status'],
                 is_staff_head=request.POST['is_staff_head'],
@@ -62,7 +63,8 @@ def register(request):
                 graduation_university_city=request.POST['graduation_university_city'],
                 degree=request.POST['degree'])
             physician.save()
-        except:
+        except Exception as e:
+            logging.exception("message")
             try:
                 if user:
                     user.delete()
@@ -70,12 +72,13 @@ def register(request):
                     physician.delete()
             except:
                 pass
-            return HttpResponse("An Error Has Occured During Registration, Since Required Fields Are Not    \
-                                Entered Properly , Please Try Again")
+            # return HttpResponse("An Error Has Occured During Registration, Since Required Fields Are Not    \
+            #                     Entered Properly , Please Try Again")
+            return render(request, 'physician/register.html', {'flag': False})
 
         # c.update(csrf(request))
         return HttpResponseRedirect(reverse('rec_app:rec_search'))
-    return render(request, 'physician/register.html', {})
+    return render(request, 'physician/register.html', {'flag': True})
 
 
 def home(request):

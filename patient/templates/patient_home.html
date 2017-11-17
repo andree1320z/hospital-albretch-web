@@ -1,19 +1,21 @@
 <!DOCTYPE html>
+{% load static %}
 {% load staticfiles %}
 <html>
 <head>
-	<title>Patient|Home</title>
+	<title>Paciente|Home</title>
+        <meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
 	    <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
 </head>
 <body>
 <div class="sidebar">
 	<ul>
-		<a class="btn warning" href="#profile"><li class="btn">Profile</li></a>
-		<a class="btn warning" href="#history"><li class="btn warning">History</li></a>
-		<a class="btn warning" href="#schedule"><li class="btn warning ">Schedule</li></a>
+		<a class="btn warning" href="{% url 'patient_app:patient_home' %}"><li class="btn">Perfil</li></a>
+		<a class="btn warning" href="{% url 'history_records:medical_history' patient.user.username 1 %}"><li class="btn warning">Historia Clínica</li></a>
+		<a class="btn warning" href="#schedule"><li class="btn warning ">Citas</li></a>
 {#		<a class="btn warning" href="{% url 'django_messages:messages_inbox' %}"><li class="btn warning">Messages</li></a>#}
-		<a class="btn warning" href="{% url 'patientsearch' %}"><li class="btn warning ">Search</li></a>
+{#		<a class="btn warning" href="{% url 'patientsearch' %}"><li class="btn warning ">Search</li></a>#}
         <a class="btn warning" href="{% url 'logout' %}"><li class="btn warning ">Log Out</li></a>
 	</ul>
 </div>
@@ -25,14 +27,14 @@
         <img src="{% static 'congruent_pentagon.png' %}">
         {% endif %}
 		<p>Username : {{ patient.user.username}} </p>
-		<p>FirstName : {{ patient.user.first_name}} </p>
-		<p>LastName : {{ patient.user.last_name}} </p>
+		<p>Nombre : {{ patient.user.first_name}} </p>
+		<p>Apellidos : {{ patient.user.last_name}} </p>
 		<p>Email: {{ patient.user.email}}</p>
-		<p>social security number :{{ patient.ssn}} </p>
-		<p>Birthday : {{ patient.birthday }}</p>
-		<p>Age : {{ patient.age }}</p>
-		<p>Occuption : {{ patient.occupation}} </p>
-		<p>Address : {{ patient.get_address_as_string }}</p>
+		<p>DNI : {{ patient.ssn}} </p>
+{#		<p>Birthday : {{ patient.birthday }}</p>#}
+		<p>Edad : {{ patient.age }}</p>
+		<p>Ocupación : {{ patient.occupation}} </p>
+		<p>Dirección : {{ patient.get_address_as_string }}</p>
 
 	</div>
 	<div class="module" id="history"></div>
@@ -42,18 +44,14 @@
 	<div class="schedule" id="schedule">
 
     {% if sch.event %}
-    <p> Event : {{ sch.event }} </p>
-    <p> Date : {{ sch.event_date }} </p>
-    <p> Time : {{ sch.event_time }} </p>
+    <p> Cita : {{ sch.event }} </p>
+    <p> Fecha : {{ sch.event_date }} </p>
+    <p> Hora : {{ sch.event_time }} </p>
     <p> Related_Divison : {{ sch.related_division }} </p>
-    <p> description : {{ sch.description }} </p>
+    <p> Descripción : {{ sch.description }} </p>
     {% else %}
-        <p>You have no upcoming event!</p>
+        <p>No tiene ninguna cita pendiente.</p>
     {% endif %}
-     <p>&nbsp</p>
-        <p>&nbsp</p>
-        <p>&nbsp</p>
-        <p>&nbsp</p>
 	</div>
 	<div class="module" id="messages"></div>
 	<div class="module" id="search"></div>

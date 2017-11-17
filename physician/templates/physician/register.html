@@ -8,73 +8,82 @@
 	<link rel="stylesheet" type="text/css" href='{% static "style.css" %} '>
 </head>
 <body>
-	<form method="post" >
+	<form method="post" style="text-align: center !important;">
 	{% csrf_token %}
-		<legend>Regitro de personal médico</legend>
+		<legend>Registro de personal médico</legend>
 		<hr>
-		<p><input name="username" placeholder="Username">  </p>
-		<p><input name="first_name" placeholder="Firstname" type="text">  </p>
-		<p><input name="last_name" placeholder="Lastname" type="text">  </p>
-		<p><input name="email" type="email" placeholder="Email">  </p>
-		<p><input name="tel" type="tel" placeholder="Tel">  </p>
-		<p><input name="ssn" placeholder="ssn"></p>
-		<p><input name="birthday" type="date" placeholder="Birthday"></p>
-		<p><input name="age" placeholder="Age"></p>
+		<p><input name="username" placeholder="Username" required maxlength="150">  </p>
+		<p><input name="first_name" placeholder="Nombre" type="text" required maxlength="30">  </p>
+		<p><input name="last_name" placeholder="Apellidos" type="text" required maxlength="30">  </p>
+		<p><input name="email" type="email" placeholder="Email" required>  </p>
+		<p><input name="tel" type="tel" placeholder="Teléfono" required maxlength="25">  </p>
+		<p><input name="ssn" placeholder="DNI" required maxlength="8"></p>
+{#		<p><input name="birthday" type="date" placeholder="Birthday"></p>#}
+		<p><input name="age" placeholder="Edad" required maxlength="2"></p>
 		<p> 
-			<select name="marital_status">
-				<option value="0">single</option>
-				<option value="1">married</option>
+			<select name="marital_status" required>
+                <option value="None">Estado Civil</option>
+				<option value="0">Soltero</option>
+				<option value="1">Casado</option>
 			</select>
 		</p>
         <p>
-			<select name="is_staff_head">
-				<option value="True">Is Head</option>
-				<option value="False">Is Not Head</option>
+			<select name="is_staff_head" required>
+                <option value="None" disabled selected>¿Es jefe de departamento?</option>
+				<option value="True">Sí</option>
+				<option value="False">No</option>
 			</select>
 		</p>
-		<p><input name="country" placeholder="Country">  </p>
-		<p><input name="city" placeholder="City">  </p>
-		<p><input name="district" placeholder="District">  </p>
-		<p><input name="street" placeholder="Street">  </p>
-		<p><input name="alley" placeholder="Alley">  </p>
-		<p><input name="building_no" placeholder="Building-no">  </p>
-		<p><input name="postal_code" placeholder="Postal Code">  </p>
+		<p><input name="country" placeholder="País" required maxlength="200">  </p>
+		<p><input name="city" placeholder="Ciudad" required maxlength="25">  </p>
+		<p><input name="district" placeholder="Distrito" required maxlength="25">  </p>
+		<p><input name="street" placeholder="Provincia" required maxlength="30">  </p>
+		<p><input name="alley" placeholder="Calle/edificio" required maxlength="30">  </p>
+		<p><input name="building_no" placeholder="Número" required maxlength="200">  </p>
+		<p><input name="postal_code" placeholder="Código Postal" required maxlength="30">  </p>
         <p>
-			<select name="speciality">
-				<option value="cr">cardialogist</option>
-				<option value="dr">dermatologist</option>
-                <option value="en">endocrinologist</option>
-                <option value="ent">Ear Nose Throat</option>
-                 <option value="ge">Gerontologist</option>
-                <option value="gy">Gynaecologist</option>
-                <option value="ha">Haematologist</option>
-                <option value="in">Internist</option>
-                <option value="ne">Neurologist</option>
-                <option value="ob">Obstetrician</option>
-                <option value="on">Oncologist</option>
-                <option value="op">Ophthalmologist</option>
-                <option value="or">Orthodontist</option>
-                <option value="ort">Orthopaedis</option>
-                <option value="pd">Pediatrician</option>
-                <option value="po">Podiatrist</option>
-                <option value="ra">Radiologist</option>
-                <option value="sr">Surgeon</option>
-                <option value="ur">Urologist</option>
+			<select name="speciality" required>
+                <option value="None" disabled selected>Especialidad</option>
+				<option value="cr">Cardiología</option>
+				<option value="dr">Dermatología</option>
+                <option value="en">Endocrinología</option>
+                <option value="ent">Otorrinolaringólogo</option>
+                <option value="ge">Geriatría</option>
+                <option value="gy">Ginecología</option>
+                <option value="ha">Hematología</option>
+                <option value="in">Internista</option>
+                <option value="ne">Neurología</option>
+                <option value="ob">Obstetricia</option>
+                <option value="on">Oncología</option>
+                <option value="op">Oftamología</option>
+                <option value="or">Ortodoncia</option>
+                <option value="ort">Ortopedia</option>
+                <option value="pd">Pediatría</option>
+                <option value="po">Podología</option>
+                <option value="ra">Radiología</option>
+                <option value="sr">Cirugía</option>
+                <option value="ur">Urología</option>
 			</select>
 		</p>
-		<p><input name="graduation_university_name" placeholder="graduation university name"></p>
-		<p><input name="graduation_university_country" placeholder="graduation university country"></p>
-		<p><input name="graduation_university_city" placeholder="graduation university city"></p>
+		<p><input name="graduation_university_name" placeholder="Universidad procedente" required maxlength="200"></p>
+		<p><input name="graduation_university_country" placeholder="País de graduación de universidad" required maxlength="200"></p>
+		<p><input name="graduation_university_city" placeholder="Ciudad perteneciente al país" required maxlength="200"></p>
         <p>
-			<select name="degree">
-				<option value="DE">dentist</option>
-				<option value="GP">general practitioner</option>
-                <option value="SP">Specialist</option>
+			<select name="degree" required>
+                <option value="" disabled selected>Título</option>
+				<option value="DE">Dentista</option>
+				<option value="GP">Médico General</option>
+                <option value="SP">Especialista</option>
                 <option value="SSP">SSP</option>
 			</select>
 		</p>
 		<br>
-		<input type="submit">
+{#		<input type="submit">#}
+		<button class="btn btn-primary" type="submit">Enviar</button>
+        <br>
+        {% if flag == False %}
+            <p class="alert-danger">Existen campos inválidos, revise por favor</p>
+        {% endif %}
 	</form>
 </body>
 </html>

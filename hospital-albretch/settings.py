@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'receptionist',
     'schedule',
     'physician',
+    'history_records',
 )
 
 MIDDLEWARE_CLASSES = (

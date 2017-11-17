@@ -26,6 +26,7 @@ TEST_RUNNER = 'your_modules.HerokuDiscoverRunner'
 the runner will exit as a safety measure.
 """
 
+
 class HerokuDiscoverRunner(DiscoverRunner):
     def setup_databases(self, **kwargs):
         if not os.environ.get('IS_HEROKU_TEST'):
