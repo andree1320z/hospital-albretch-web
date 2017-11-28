@@ -4,7 +4,7 @@
     <facet type="django" name="Django">
       <configuration>
         <option name="rootFolder" value="$MODULE_DIR$" />
-        <option name="settingsModule" value="gettingstarted/settings.py" />
+        <option name="settingsModule" value="hospital-albretch/settings.py" />
         <option name="manageScript" value="$MODULE_DIR$/manage.py" />
         <option name="environment" value="&lt;map/&gt;" />
       </configuration>
@@ -13,8 +13,9 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/plantilla-neo" />
     </content>
-    <orderEntry type="inheritedJdk" />
+    <orderEntry type="jdk" jdkName="Python 3.6.3 virtualenv at ~/.virtualenvs/hospital-albretch-web" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
@@ -27,6 +28,7 @@
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/physician/templates" />
         <option value="$MODULE_DIR$/history_records/templates" />
+        <option value="$MODULE_DIR$/schedule/templates" />
       </list>
     </option>
   </component>

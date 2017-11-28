@@ -93,6 +93,6 @@ def home(request):
         sch = Schedule.objects.get(patient=patient)
     except:
         sch = None
-    c = {'patient': patient, 'sch': sch}
+    c = {'patient': patient, 'sch': sch, 'request': request}
     c.update(csrf(request))
     return render_to_response('patient_home.html', c, RequestContext(request))

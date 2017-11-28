@@ -97,7 +97,7 @@ def home(request):
     except:
         doc = None
 
-    c = {'doc': doc}
+    c = {'doc': doc, 'request': request}
     c.update(csrf(request))
     return render_to_response('physician/physician_home.html', c)
 

@@ -1,69 +1,238 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-{% load staticfiles %}
-<html>
-<head>
-	<title>Paciente|Home</title>
-        <meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/general-style.css' %}">
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/patient_home.css' %}">
-</head>
-<body>
-<div class="sidebar">
-	<ul>
-		<a class="btn warning" href="{% url 'patient_app:patient_home' %}"><li class="btn">Perfil</li></a>
-		<a class="btn warning" href="{% url 'history_records:medical_history' patient.user.username 1 %}"><li class="btn warning">Historia Clínica</li></a>
-		<a class="btn warning" href="#schedule"><li class="btn warning ">Citas</li></a>
-{#		<a class="btn warning" href="{% url 'django_messages:messages_inbox' %}"><li class="btn warning">Messages</li></a>#}
-{#		<a class="btn warning" href="{% url 'patientsearch' %}"><li class="btn warning ">Search</li></a>#}
-        <a class="btn warning" href="{% url 'logout' %}"><li class="btn warning ">Log Out</li></a>
-	</ul>
-</div>
-<div class="main">
-	<div class="module" id="profile">
-        {% if patient.photo %}
-		<p><img src={{patient.photo.url}}></p>
-        {% else %}
-        <img src="{% static 'congruent_pentagon.png' %}">
-        {% endif %}
-		<p>Username : {{ patient.user.username}} </p>
-		<p>Nombre : {{ patient.user.first_name}} </p>
-		<p>Apellidos : {{ patient.user.last_name}} </p>
-		<p>Email: {{ patient.user.email}}</p>
-		<p>DNI : {{ patient.ssn}} </p>
-{#		<p>Birthday : {{ patient.birthday }}</p>#}
-		<p>Edad : {{ patient.age }}</p>
-		<p>Ocupación : {{ patient.occupation}} </p>
-		<p>Dirección : {{ patient.get_address_as_string }}</p>
+{% block content %}
+    <div class="module" id="profile">
 
-	</div>
-	<div class="module" id="history"></div>
-    <div><article>
-    <p>&nbsp</p>
-    </article></div>
-	<div class="schedule" id="schedule">
+        <div class="profile-env">
 
-    {% if sch.event %}
-    <p> Cita : {{ sch.event }} </p>
-    <p> Fecha : {{ sch.event_date }} </p>
-    <p> Hora : {{ sch.event_time }} </p>
-    <p> Related_Divison : {{ sch.related_division }} </p>
-    <p> Descripción : {{ sch.description }} </p>
-    {% else %}
-        <p>No tiene ninguna cita pendiente.</p>
-    {% endif %}
-	</div>
-	<div class="module" id="messages"></div>
-	<div class="module" id="search"></div>
-</div>
-<div class="pattern"></div>
-</body>
-<script src="js/jquery.js"></script>
-<script src="js/hoverIntent.js"></script>
-<script src="js/script.js"></script>
-<script type="text/javascript">
-	$('li.btn').hoverIntent(function(){
-		round($(this));
-	},function(){});
-</script>
-</html>
+            <header class="row">
+
+                <div class="col-sm-2">
+
+                    <a href="#" class="profile-picture">
+                        <img src="assets/images/profile-picture.png" class="img-responsive img-circle"/>
+                        {% if patient.photo %}
+                            <img src="{{ patient.photo.url }}" class="img-responsive img-circle">
+                        {% else %}
+                            <img src="{% static 'congruent_pentagon.png' %}" class="img-responsive img-circle">
+                        {% endif %}
+                    </a>
+
+                </div>
+
+                <div class="col-sm-7">
+
+                    <ul class="profile-info-sections">
+                        <li>
+                            <div class="profile-name">
+                                <strong>
+                                    <a href="#">{{ patient.user.get_full_name }}</a>
+                                    <a href="#" class="user-status is-online tooltip-primary" data-toggle="tooltip"
+                                       data-placement="top" data-original-title="Online"></a>
+                                    <!-- User statuses available classes "is-online", "is-offline", "is-idle", "is-busy" -->
+                                </strong>
+                                <span><a href="#">D.N.I:&nbsp;{{ patient.ssn }}</a></span>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <div class="col-sm-3">
+
+                    <div class="profile-buttons">
+                        <a href="#" class="btn btn-default">
+                            <i class="entypo-mail"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </header>
+
+            <section class="profile-info-tabs">
+
+                <div class="row">
+
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        <ul class="user-details">
+                            <li>
+                                <a href="#">
+                                    <i class="entypo-location"></i>
+                                    {{ patient.get_address_as_string }}
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="entypo-suitcase"></i>
+                                    <span>{{ patient.occupation }}</span>
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#">
+                                    <i class="entypo-calendar"></i>
+                                    {{ patient.age }}&nbsp;años
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                </div>
+
+            </section>
+        </div>
+    </div>
+    <div class="container">
+        <!-- tabs for the profile links -->
+        <ul class="nav nav-tabs bordered">
+            <li class="active"><a href="#citas" data-toogle="tab">Citas</a></li>
+            <li class=""><a href="#calendario" data-toogle="tab">Calendario</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="citas">
+                <section id="" class="profile-feed">
+
+                    {% if sch.event %}
+                        <p> Cita : {{ sch.event }} </p>
+                        <p> Fecha : {{ sch.event_date }} </p>
+                        <p> Hora : {{ sch.event_time }} </p>
+                        <p> Sector : {{ sch.related_division }} </p>
+                        <p> Descripción : {{ sch.description }} </p>
+                    {% else %}
+                        <p>No tiene ninguna cita pendiente.</p>
+                    {% endif %}
+                    <br>
+                    <div class="calendar-env">
+
+                        <!-- Calendar Body -->
+                        <div class="calendar-body">
+
+                            <div id="calendar"></div>
+
+
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="calendar-sidebar">
+
+                            <!-- new task form -->
+                            <div class="calendar-sidebar-row">
+
+                                <form role="form" id="add_event_form">
+
+                                    <div class="input-group minimal">
+                                        <input type="text" class="form-control" placeholder="Add event..."/>
+
+                                        <div class="input-group-addon">
+                                            <i class="entypo-pencil"></i>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+
+                            <!-- Events List -->
+                            <ul class="events-list" id="draggable_events">
+                                <li>
+                                    <p>Drag Events to Calendar Dates</p>
+                                </li>
+                                <li>
+                                    <a href="#">Gastroenterologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-blue" data-event-class="color-blue">Cardiologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-orange" data-event-class="color-orange">Urologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-primary" data-event-class="color-primary">Reumatologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-green" data-event-class="color-green">Otorrinolaringolo</a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </section>
+            </div>
+            <div class="tab-pane" id="calendario">
+                <section id="" class="biography">
+                    <div class="calendar-env">
+
+                        <!-- Calendar Body -->
+                        <div class="calendar-body">
+
+                            <div id="calendar"></div>
+
+
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div class="calendar-sidebar">
+
+                            <!-- new task form -->
+                            <div class="calendar-sidebar-row">
+
+                                <form role="form" id="add_event_form">
+
+                                    <div class="input-group minimal">
+                                        <input type="text" class="form-control" placeholder="Add event..."/>
+
+                                        <div class="input-group-addon">
+                                            <i class="entypo-pencil"></i>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+
+
+                            <!-- Events List -->
+                            <ul class="events-list" id="draggable_events">
+                                <li>
+                                    <p>Drag Events to Calendar Dates</p>
+                                </li>
+                                <li>
+                                    <a href="#">Gastroenterologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-blue" data-event-class="color-blue">Cardiologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-orange" data-event-class="color-orange">Urologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-primary" data-event-class="color-primary">Reumatologo</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="color-green" data-event-class="color-green">Otorrinolaringolo</a>
+                                </li>
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </section>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block extra_js %}
+    <!-- Imported scripts on this page -->
+    <script src="{% static 'assets/js/fullcalendar/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'assets/js/neon-calendar.js' %}"></script>
+    <script src="{% static 'assets/js/neon-chat.js' %}"></script>
+{% endblock %}

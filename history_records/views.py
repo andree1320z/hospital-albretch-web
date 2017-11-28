@@ -45,17 +45,17 @@ def index(request, username):
 #         return HttpResponse(request,"Salam")
 #         return HttpResponseRedirect('/history/' +username+"/create_file_index")
 
-def show(request, username):
-    try:
-        if not (request.user.is_authenticated() and (
-                    request.user.profile.user_type == 2)):
-            d = {'server_message': "Not Logged In."}
-            query_str = urlencode(d)
-            return HttpResponseRedirect('/login_all/?' + query_str)
-    except:
-        d = {'server_message': "not logged in"}
-        query_str = urlencode(d)
-        return HttpResponseRedirect('/login_all/?' + query_str)
+# def show(request, username):
+#     try:
+#         if not (request.user.is_authenticated() and (
+#                     request.user.profile.user_type == 2)):
+#             d = {'server_message': "Not Logged In."}
+#             query_str = urlencode(d)
+#             return HttpResponseRedirect('/login_all/?' + query_str)
+#     except:
+#         d = {'server_message': "not logged in"}
+#         query_str = urlencode(d)
+#         return HttpResponseRedirect('/login_all/?' + query_str)
 
 
 def medical_file(request, username, file_id):

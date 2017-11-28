@@ -12,6 +12,15 @@ from receptionist.search import *
 
 
 def firstpage(request):
+    try:
+        if not (request.user.is_authenticated() and request.user.profile.user_type == 6):
+            d = {'server_message': "Not Logged In."}
+            query_str = urlencode(d)
+            return HttpResponseRedirect('/login_all/?' + query_str)
+    except:
+        d = {'server_message': "not logged in"}
+        query_str = urlencode(d)
+        return HttpResponseRedirect('/login_all/?' + query_str)
     if request.method == 'POST':
         if request.method.POST.get('home'):
             return HttpResponseRedirect('SystemHomePage')

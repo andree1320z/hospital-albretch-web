@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^reports/', views.get_reports, name='reports'),
     url(r'^physician/', include('physician.urls', namespace='doc_app')),
     url(r'^messages/', include('django_messages.urls', namespace='django_messages')),
+    url(r'^mostrar/', include('schedule.urls', namespace='mostrar')),
 ]

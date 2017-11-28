@@ -10,10 +10,10 @@
 <div class="header">
 	<ul>
 		<li class="brand"><img src="{% static 'logo.png' %}"></li>
-		<a href="{% url 'SystemHomePage' %}"><li>SystemHomePage</li></a>
-		<a href="{% url 'phar_app:login' %}"><li>Pharmacy</li></a>
-		<a href="{% url 'messages_inbox' %}"><li>Messages</li></a>
-		<a href="{% url 'PatientSearch' %}" ><li>Search Patient</li></a>
+		<a href="{% url 'systemhomepage' %}"><li>Home</li></a>
+{#		<a href="{% url 'phar_app:login' %}"><li>Pharmacy</li></a>#}
+{#		<a href="{% url 'messages_inbox' %}"><li>Messages</li></a>#}
+{#		<a href="{% url 'PatientSearch' %}" ><li>Search Patient</li></a>#}
 		<a href="#"><li>Contact</li></a>
         <a href="{% url 'logout' %}"><li>Logout</li></a>
 		
@@ -22,10 +22,10 @@
 <br><br>
 <form method='post'>
 	{% csrf_token %}
-<p>ward:<input type='text' name='ward'></p>
-<p>room:<input type='text' name='room'></p>
-<p>bed:<input type='text' name='bed'></p>
-<input class="btn warning" type='submit' value="submit">
+<p>Encargado:<input type='text' name='ward'></p>
+<p>Cuarto:<input type='text' name='room'></p>
+<p>Cama:<input type='text' name='bed'></p>
+<input class="btn warning" type='submit' value="Guardar">
 </form>
 
 

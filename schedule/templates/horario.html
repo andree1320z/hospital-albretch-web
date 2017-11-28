@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="calendar-env">
+
+        <!-- Calendar Body -->
+        <div class="calendar-body" style="width: 100%;">
+
+            <div id="calendar"></div>
+
+
+        </div>
+
+    </div>
+{% endblock %}
+{% block extra_js %}
+    <!-- Imported scripts on this page -->
+    <script src="{% static 'assets/js/fullcalendar/fullcalendar.min.js' %}"></script>
+    <script src="{% static 'assets/js/neon-calendar.js' %}"></script>
+    <script src="{% static 'assets/js/neon-chat.js' %}"></script>
+{% endblock %}
